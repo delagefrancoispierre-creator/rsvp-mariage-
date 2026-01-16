@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>RSVP Mariage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f7e7e7, #fffaf5);
+      color: #4a3b3b;
+    }
+    .container {
+      max-width: 520px;
+      margin: 40px auto;
+      background: #ffffffcc;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #d8cfcf;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    textarea { resize: vertical; }
+    button {
+      margin-top: 28px;
+      background: #c9a3a3;
+      color: white;
+      border: none;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background: #b28b8b; }
+    .success {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+      color: #3a7c59;
+      font-weight: 600;
+    }
+    #addresses { display:none; }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="protected" style="display:none;">
+    <h1>Mariage de Cam&FP</h1>
+    <p class="subtitle">Merci de confirmer ta présence 💍</p>
+
+    <form id="rsvpForm">
+      <label>Nom et prénom</label>
+      <input type="text" name="nom" required />
+
+      <label>Présent·e au mariage</label>
+      <select name="presence" required>
+        <option value="">— Choisir —</option>
+        <option>Oui</option>
+        <option>Non</option>
+      </select>
+
+      <label>Viendras-tu seul·e ou accompagné·e ?</label>
+      <select name="accompagnement" required>
+        <option value="">— Choisir —</option>
+        <option>Seul·e</option>
+        <option>Accompagné·e</option>
+      </select>
+
+      <label>Nombre total de personnes (toi inclus)</label>
+      <input type="number" name="nb_personnes" min="1" value="1" required />
+
+      <label>Préférence de plat</label>
+      <select name="plat" required>
+        <option value="">— Choisir —</option>
+        <option>Végétarien</option>
+        <option>Flexitarien</option>
+      </select>
+
+      <label>Quelle musique ne veux-tu pas entendre ?</label>
+      <textarea name="musique_non" rows="3"></textarea>
+
+      <label>Quelle musique te ferait plaisir ?</label>
+      <textarea name="musique_oui" rows="3"></textarea>
+
+      <button type="submit">Envoyer ma réponse</button>
+    </form>
+
+    <div class="success" id="successMessage">
+      Merci pour ta réponse ❤️<br>
+      On a hâte de célébrer ce moment avec toi 💕
+    </div>
+
+    <div id="addresses">
+      <hr style="margin:30px 0; border:none; border-top:1px solid #e5dcdc;">
+      <h2 style="font-family:'Playfair Display', serif; text-align:center; font-size:1.3rem;">
+        Adresses utiles
+      </h2>
+
+      <p>
+        <strong>Église :</strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Place+du+Temple+59000+Lille" target="_blank">
+          Place du Temple – 59000 Lille
+        </a>
+      </p>
+
+      <p>
+        <strong>La Cense des Sources :</strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Chemin+du+Vieux+Comté+1+7542+Tournai+Belgique" target="_blank">
+          Chemin du Vieux Comté 1 – 7542 Tournai – Belgique
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('qr') !== 'camfp') {
+        document.body.innerHTML =
+          '<div style="font-family:Montserrat,sans-serif; padding:40px; text-align:center;">🔒<br><br>Page accessible uniquement via le QR code du mariage.</div>';
+        return;
+      }
+
+      document.getElementById('protected').style.display = 'block';
+
+      const form = document.getElementById('rsvpForm');
+      const success = document.getElementById('successMessage');
+      const addresses = document.getElementById('addresses');
+
+      if (localStorage.getItem('rsvp_done')) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        addresses.style.display = 'block';
+        return;
+      }
+
+      const scriptURL = 'https://script.google.com/macros/s/TON_URL_ICI/exec';
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        fetch(scriptURL, {
+          method: 'POST',
+          body: new FormData(form)
+        }).then(() => {
+          localStorage.setItem('rsvp_done', 'true');
+          form.style.display = 'none';
+          success.style.display = 'block';
+          addresses.style.display = 'block';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
