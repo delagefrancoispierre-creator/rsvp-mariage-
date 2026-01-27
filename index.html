@@ -62,7 +62,7 @@
       color: #3a7c59;
       font-weight: 600;
     }
-    #addresses { display:none; }
+    #addresses { }
   </style>
 </head>
 <body>
@@ -148,7 +148,7 @@
 
       const form = document.getElementById('rsvpForm');
       const success = document.getElementById('successMessage');
-      const addresses = document.getElementById('addresses');
+      // const addresses = document.getElementById('addresses');
       const nomInput = document.getElementById('nom');
 
       if (!form) return;
@@ -156,7 +156,6 @@
       // 🔐 Bloquer une réponse par personne (localStorage)
       if (localStorage.getItem('rsvp_done')) {
         success.style.display = 'block';
-        addresses.style.display = 'block';
         form.style.display = 'none';
         return;
       }
@@ -173,7 +172,6 @@
           localStorage.setItem('rsvp_done', 'true');
           form.style.display = 'none';
           success.style.display = 'block';
-          addresses.style.display = 'block';
         })
         .catch(error => alert('Erreur : ' + error.message));
       });
