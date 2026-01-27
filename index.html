@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>RSVP Mariage</title> 
+  <title>RSVP Mariage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -62,12 +62,12 @@
       color: #3a7c59;
       font-weight: 600;
     }
-    #addresses { }
+    #addresses { margin-top: 20px; }
   </style>
 </head>
 <body>
 
-  <div class="container" id="protected" style="display:none;">
+  <div class="container" id="protected">
     <h1>Mariage de Cam&FP</h1>
     <p class="subtitle">Merci de confirmer ta présence 💍</p>
 
@@ -138,29 +138,18 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('qr') === 'camfp') {
-        document.getElementById('protected').style.display = 'block';
-      } else {
-        document.body.innerHTML = '<div style="font-family:Montserrat,sans-serif; padding:40px; text-align:center;">🔒<br><br>Cette page est accessible uniquement via le QR code du mariage.</div>';
-        return;
-      }
-
       const form = document.getElementById('rsvpForm');
       const success = document.getElementById('successMessage');
-      // const addresses = document.getElementById('addresses');
-      const nomInput = document.getElementById('nom');
-
       if (!form) return;
 
-      // 🔐 Bloquer une réponse par personne (localStorage)
+      // Bloquer une réponse par appareil
       if (localStorage.getItem('rsvp_done')) {
-        success.style.display = 'block';
         form.style.display = 'none';
+        success.style.display = 'block';
         return;
       }
 
-      const scriptURL = https://script.google.com/macros/s/AKfycbyYzCLS8g8_j4vC--N4hU85LqkGp_uc2PUusPqI0B16CJsw629ONZHSnZZiJepCN_8O/exec ;
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyYzCLS8g8_j4vC--N4hU85LqkGp_uc2PUusPqI0B16CJsw629ONZHSnZZiJepCN_8O/exec';
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
