@@ -73,7 +73,7 @@
 
     <form id="rsvpForm">
       <label>Nom et prénom</label>
-      <input type="text" name="nom" required />
+      <input type="text" name="nom" id="nom" required />
 
       <label>Présent·e au mariage</label>
       <select name="presence" required>
@@ -83,10 +83,10 @@
       </select>
 
       <label>Viendras-tu seul·e ou accompagné·e ?</label>
-      <select name="accompagnement" required>
+      <select name="accompagnement" id="accompagnement" required>
         <option value="">— Choisir —</option>
-        <option>Seul·e</option>
-        <option>Accompagné·e</option>
+        <option value="1">Seul·e</option>
+        <option value="2">Accompagné·e</option>
       </select>
 
       <label>Nombre total de personnes (toi inclus)</label>
@@ -105,6 +105,13 @@
       <label>Quelle musique te ferait plaisir ?</label>
       <textarea name="musique_oui" rows="3"></textarea>
 
+      <label>Aurez-vous besoin d'un logement pas loin ?</label>
+      <select name="logement" required>
+        <option value="">— Choisir —</option>
+        <option>Oui</option>
+        <option>Non</option>
+      </select>
+
       <button type="submit">Envoyer ma réponse</button>
     </form>
 
@@ -115,22 +122,16 @@
 
     <div id="addresses">
       <hr style="margin:30px 0; border:none; border-top:1px solid #e5dcdc;">
-      <h2 style="font-family:'Playfair Display', serif; text-align:center; font-size:1.3rem;">
-        Adresses utiles
-      </h2>
+      <h2 style="font-family:'Playfair Display', serif; text-align:center; font-size:1.3rem;">Adresses utiles</h2>
 
-      <p>
-        <strong>Église :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Place+du+Temple+59000+Lille" target="_blank">
-          Place du Temple – 59000 Lille
-        </a>
+      <p style="margin-top:15px; font-size:0.95rem;">
+        <strong>Cérémonie religieuse :</strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank" style="color:#8b5e5e; text-decoration:underline;">Temple de Lille<br>Place du Temple<br>Lille</a>
       </p>
 
-      <p>
-        <strong>La Cense des Sources :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Chemin+du+Vieux+Comté+1+7542+Tournai+Belgique" target="_blank">
-          Chemin du Vieux Comté 1 – 7542 Tournai – Belgique
-        </a>
+      <p style="margin-top:10px; font-size:0.95rem;">
+        <strong>Lieu de fête :</strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+chemin+du+vieux+compté+1+7542+Tournai+Belgique" target="_blank" style="color:#8b5e5e; text-decoration:underline;">La Cense des Sources<br>Chemin du vieux compté 1<br>7542 Tournai<br>Belgique</a>
       </p>
     </div>
   </div>
@@ -138,38 +139,43 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('qr') !== 'camfp') {
-        document.body.innerHTML =
-          '<div style="font-family:Montserrat,sans-serif; padding:40px; text-align:center;">🔒<br><br>Page accessible uniquement via le QR code du mariage.</div>';
+      if (params.get('qr') === 'camfp') {
+        document.getElementById('protected').style.display = 'block';
+      } else {
+        document.body.innerHTML = '<div style="font-family:Montserrat,sans-serif; padding:40px; text-align:center;">🔒<br><br>Cette page est accessible uniquement via le QR code du mariage.</div>';
         return;
       }
-
-      document.getElementById('protected').style.display = 'block';
 
       const form = document.getElementById('rsvpForm');
       const success = document.getElementById('successMessage');
       const addresses = document.getElementById('addresses');
+      const nomInput = document.getElementById('nom');
 
+      if (!form) return;
+
+      // 🔐 Bloquer une réponse par personne (localStorage)
       if (localStorage.getItem('rsvp_done')) {
-        form.style.display = 'none';
         success.style.display = 'block';
         addresses.style.display = 'block';
+        form.style.display = 'none';
         return;
       }
 
       const scriptURL = 'https://script.google.com/macros/s/TON_URL_ICI/exec';
 
-      form.addEventListener('submit', e => {
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
         fetch(scriptURL, {
           method: 'POST',
           body: new FormData(form)
-        }).then(() => {
+        })
+        .then(() => {
           localStorage.setItem('rsvp_done', 'true');
           form.style.display = 'none';
           success.style.display = 'block';
           addresses.style.display = 'block';
-        });
+        })
+        .catch(error => alert('Erreur : ' + error.message));
       });
     });
   </script>
