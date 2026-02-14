@@ -4,76 +4,174 @@
   <meta charset="UTF-8" />
   <title>RSVP Mariage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #f7e7e7, #fffaf5);
-      color: #4a3b3b;
+      background: #f4ecd8;
+      color: #4b3a2f;
+      overflow-x: hidden;
+      position: relative;
     }
+
+    /* Effet décoratif rond jaune */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 220px;
+      height: 220px;
+      background: #e6c65c;
+      border-radius: 50%;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    body::before { top: -80px; right: -80px; }
+    body::after { bottom: -80px; left: -80px; }
+
     .container {
-      max-width: 520px;
-      margin: 40px auto;
-      background: #ffffffcc;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+      margin: 70px auto;
+      background: #fff9ec;
+      padding: 45px;
+      border-radius: 28px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+      border: 2px solid #e6c65c;
+      animation: fadeUp 1s ease forwards;
     }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     h1 {
+      font-family: 'Great Vibes', cursive;
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 5px;
+      font-weight: normal;
+    }
+
+    .date {
+      text-align: center;
       font-family: 'Playfair Display', serif;
-      text-align: center;
-      margin-bottom: 10px;
+      font-size: 1rem;
+      margin-bottom: 35px;
+      letter-spacing: 2px;
     }
-    p.subtitle {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 0.95rem;
-    }
+
     label {
       display: block;
-      margin-top: 18px;
+      margin-top: 22px;
       margin-bottom: 6px;
       font-weight: 500;
     }
-    input, select, textarea, button {
+
+    input, select, textarea {
       width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #d8cfcf;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid #d8c9a6;
+      background: #fffdf7;
       font-size: 1rem;
       box-sizing: border-box;
+      transition: all 0.3s ease;
     }
-    textarea { resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #e6c65c;
+      box-shadow: 0 0 0 4px rgba(230,198,92,0.25);
+    }
+
     button {
-      margin-top: 28px;
-      background: #c9a3a3;
-      color: white;
+      width: 100%;
+      margin-top: 40px;
+      padding: 15px;
+      border-radius: 20px;
       border: none;
-      font-size: 1.05rem;
+      background: #e6c65c;
+      color: #4b3a2f;
+      font-weight: 600;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
     }
-    button:hover { background: #b28b8b; }
+
+    button:hover {
+      background: #d4b24d;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
     .success {
       display: none;
-      margin-top: 20px;
       text-align: center;
-      color: #3a7c59;
+      margin-top: 30px;
       font-weight: 600;
+      animation: fadeIn 0.8s ease forwards;
     }
-    #addresses { margin-top: 20px; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #addresses {
+      margin-top: 50px;
+      font-size: 0.95rem;
+    }
+
+    #addresses h2 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    #addresses a {
+      color: #4b3a2f;
+      text-decoration: underline;
+    }
+
+    hr {
+      margin: 45px 0;
+      border: none;
+      border-top: 1px solid #e6c65c;
+    }
+
+    /* Petite animation pétales */
+    .petal {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #e6c65c;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 12s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(-10vh); }
+      to { transform: translateY(110vh); }
+    }
   </style>
 </head>
 <body>
 
-  <div class="container" id="protected">
-    <h1>Mariage de Cam&FP</h1>
-    <p class="subtitle">Merci de confirmer ta présence 💍</p>
+  <div class="container">
+    <h1>Camille & François-Pierre</h1>
+    <div class="date">19.09.2026</div>
 
     <form id="rsvpForm">
       <label>Nom et prénom</label>
-      <input type="text" name="nom" id="nom" required />
+      <input type="text" name="nom" required />
 
       <label>Présent·e au mariage</label>
       <select name="presence" required>
@@ -83,7 +181,7 @@
       </select>
 
       <label>Viendras-tu seul·e ou accompagné·e ?</label>
-      <select name="accompagnement" id="accompagnement" required>
+      <select name="accompagnement" required>
         <option value="">— Choisir —</option>
         <option value="1">Seul·e</option>
         <option value="2">Accompagné·e</option>
@@ -97,6 +195,13 @@
         <option value="">— Choisir —</option>
         <option>Végétarien</option>
         <option>Flexitarien</option>
+      </select>
+
+      <label>Serez-vous présent au rebond ?</label>
+      <select name="rebond" required>
+        <option value="">— Choisir —</option>
+        <option>Oui</option>
+        <option>Non</option>
       </select>
 
       <label>Quelle musique ne veux-tu pas entendre ?</label>
@@ -116,22 +221,22 @@
     </form>
 
     <div class="success" id="successMessage">
-      Merci pour ta réponse ❤️<br>
-      On a hâte de célébrer ce moment avec toi 💕
+      Merci pour ta réponse 🤍<br>
+      Nous avons hâte de célébrer ce moment avec toi ✨
     </div>
 
     <div id="addresses">
-      <hr style="margin:30px 0; border:none; border-top:1px solid #e5dcdc;">
-      <h2 style="font-family:'Playfair Display', serif; text-align:center; font-size:1.3rem;">Adresses utiles</h2>
-
-      <p style="margin-top:15px; font-size:0.95rem;">
+      <hr>
+      <h2>Adresses utiles</h2>
+      <p>
         <strong>Cérémonie religieuse :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank" style="color:#8b5e5e; text-decoration:underline;">Temple de Lille<br>Place du Temple<br>Lille</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank">
+        Temple de Lille — Place du Temple, Lille</a>
       </p>
-
-      <p style="margin-top:10px; font-size:0.95rem;">
+      <p>
         <strong>Lieu de fête :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+chemin+du+vieux+compté+1+7542+Tournai+Belgique" target="_blank" style="color:#8b5e5e; text-decoration:underline;">La Cense des Sources<br>Chemin du vieux compté 1<br>7542 Tournai<br>Belgique</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+chemin+du+vieux+compté+1+7542+Tournai+Belgique" target="_blank">
+        La Cense des Sources — Chemin du vieux compté 1, 7542 Tournai, Belgique</a>
       </p>
     </div>
   </div>
@@ -140,13 +245,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('rsvpForm');
       const success = document.getElementById('successMessage');
-      if (!form) return;
 
-      // Bloquer une réponse par appareil
       if (localStorage.getItem('rsvp_done')) {
         form.style.display = 'none';
         success.style.display = 'block';
-        return;
       }
 
       const scriptURL = 'https://script.google.com/macros/s/AKfycbyYzCLS8g8_j4vC--N4hU85LqkGp_uc2PUusPqI0B16CJsw629ONZHSnZZiJepCN_8O/exec';
@@ -164,6 +266,16 @@
         })
         .catch(error => alert('Erreur : ' + error.message));
       });
+
+      // Génération de pétales animés
+      for (let i = 0; i < 12; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = (8 + Math.random() * 8) + 's';
+        petal.style.opacity = Math.random() * 0.5;
+        document.body.appendChild(petal);
+      }
     });
   </script>
 
