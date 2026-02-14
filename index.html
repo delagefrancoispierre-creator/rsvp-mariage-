@@ -246,24 +246,35 @@
       const form = document.getElementById('rsvpForm');
       const success = document.getElementById('successMessage');
 
-      if (localStorage.getItem('rsvp_done')) {
-        form.style.display = 'none';
-        success.style.display = 'block';
-      }
+      // 🔓 MODE TEST : désactivé la sécurité "une seule réponse"
+      // Si tu veux la remettre plus tard, il suffira de réactiver le code ci-dessous
+      // if (localStorage.getItem('rsvp_done')) {
+      //   form.style.display = 'none';
+      //   success.style.display = 'block';
+      // }
 
-      const scriptURL = https://script.google.com/macros/s/AKfycbzFxh0xFq0EDZIQSbq5dKvXJEWjsJ79b0BpAvZApYzqitrZ9vbwQ0fX-eiepX1pnmZD/exec; 
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyYzCLS8g8_j4vC--N4hU85LqkGp_uc2PUusPqI0B16CJsw629ONZHSnZZiJepCN_8O/exec';
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        // Désactive le bouton pour éviter double clic
+        const button = form.querySelector('button');
+        button.disabled = true;
+        button.innerText = "Envoi en cours...";
+
+        // Affichage immédiat du message (même si Google ne répond pas)
+        form.style.display = 'none';
+        success.style.display = 'block';
+
+        // Envoi vers Google Sheet
         fetch(scriptURL, {
           method: 'POST',
+          mode: 'no-cors',
           body: new FormData(form)
-        })
-        .then(() => {
-          localStorage.setItem('rsvp_done', 'true');
-          form.style.display = 'none';
-          success.style.display = 'block';
-        })
-        .catch(error => alert('Erreur : ' + error.message));
+        }).catch(error => {
+          console.error('Erreur envoi Google Sheet:', error);
+        });
       });
 
       // Génération de pétales animés
