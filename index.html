@@ -17,30 +17,39 @@
       position: relative;
     }
 
-    /* Silhouette château légère en fond */
+    /* Château plus visible et détaillé */
     .castle-bg {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 300px;
-      background: linear-gradient(to top, rgba(230,198,92,0.15), transparent);
+      height: 320px;
+      z-index: 0;
+      opacity: 0.12;
+    }
+
+    .castle-bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Décorations florales style faire-part */
+    .floral-top, .floral-bottom {
+      position: fixed;
+      width: 180px;
+      opacity: 0.15;
       z-index: 0;
     }
 
-    .castle-shape {
-      position: absolute;
+    .floral-top {
+      top: 0;
+      right: 0;
+    }
+
+    .floral-bottom {
       bottom: 0;
-      width: 100%;
-      height: 180px;
-      background: #e6c65c;
-      opacity: 0.08;
-      clip-path: polygon(
-        0% 100%, 0% 75%, 10% 70%, 15% 60%, 20% 70%,
-        30% 55%, 35% 70%, 45% 65%, 50% 70%,
-        60% 60%, 65% 70%, 75% 65%, 80% 70%,
-        90% 60%, 95% 70%, 100% 65%, 100% 100%
-      );
+      left: 0;
+      transform: rotate(180deg);
     }
 
     .container {
@@ -105,6 +114,12 @@
       font-weight: 600;
       font-size: 1.1rem;
       cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #d4b24d;
+      transform: translateY(-2px);
     }
 
     .success {
@@ -136,15 +151,15 @@
       border-top: 1px solid #e6c65c;
     }
 
-    /* Pétales animés */
+    /* Pétales plus foncés */
     .petal {
       position: fixed;
-      width: 10px;
-      height: 10px;
-      background: #e6c65c;
+      width: 12px;
+      height: 12px;
+      background: #c9a227;
       border-radius: 50%;
-      opacity: 0.4;
-      animation: float 12s linear infinite;
+      opacity: 0.6;
+      animation: float 10s linear infinite;
       z-index: 1;
     }
 
@@ -156,8 +171,15 @@
 </head>
 <body>
 
+  <!-- Décor floral -->
+  <img class="floral-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Floral_line_art.svg/512px-Floral_line_art.svg.png">
+  <img class="floral-bottom" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Floral_line_art.svg/512px-Floral_line_art.svg.png">
+
+  <!-- Château -->
   <div class="castle-bg">
-    <div class="castle-shape"></div>
+    <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 250 L80 230 L120 190 L160 230 L200 180 L240 230 L280 200 L320 230 L360 170 L400 230 L440 210 L480 230 L520 180 L560 230 L600 200 L640 230 L680 190 L720 230 L760 210 L800 230 L800 300 L0 300 Z" fill="#e6c65c"/>
+    </svg>
   </div>
 
   <div class="container">
@@ -224,20 +246,6 @@
       Nous avons hâte de célébrer ce moment avec toi ✨
     </div>
 
-    <div id="addresses">
-      <hr>
-      <h2>Adresses utiles</h2>
-      <p>
-        <strong>Cérémonie religieuse :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank">
-        Temple de Lille — Place du Temple, Lille</a>
-      </p>
-      <p>
-        <strong>Lieu de fête :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+chemin+du+vieux+compté+1+7542+Tournai+Belgique" target="_blank">
-        La Cense des Sources — Chemin du vieux compté 1, 7542 Tournai, Belgique</a>
-      </p>
-    </div>
   </div>
 
   <script>
@@ -259,11 +267,6 @@
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-
-        const button = form.querySelector('button');
-        button.disabled = true;
-        button.innerText = "Envoi en cours...";
-
         form.style.display = 'none';
         success.style.display = 'block';
 
@@ -274,12 +277,11 @@
         });
       });
 
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 18; i++) {
         const petal = document.createElement('div');
         petal.className = 'petal';
         petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = (8 + Math.random() * 8) + 's';
-        petal.style.opacity = Math.random() * 0.5;
+        petal.style.animationDuration = (6 + Math.random() * 6) + 's';
         document.body.appendChild(petal);
       }
     });
