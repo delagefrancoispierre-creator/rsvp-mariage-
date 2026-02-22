@@ -203,46 +203,51 @@
 
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-      const form = document.getElementById('rsvpForm');
-      const success = document.getElementById('successMessage');
-      const presenceSelect = document.getElementById('presenceSelect');
-      const detailsSection = document.getElementById('detailsSection');
+  const form = document.getElementById('rsvpForm');
+  const success = document.getElementById('successMessage');
+  const presenceSelect = document.getElementById('presenceSelect');
+  const detailsSection = document.getElementById('detailsSection');
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwiVQgYC3aba0PvwKQVIy5ijDXn7dRhJAi-gYSEdmSZQ3VhZ-Bvj7lGv4hmHVDMBBk0FQ/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwiVQgYC3aba0PvwKQVIy5ijDXn7dRhJAi-gYSEdmSZQ3VhZ-Bvj7lGv4hmHVDMBBk0FQ/exec';
 
-      presenceSelect.addEventListener('change', () => {
-        if (presenceSelect.value === 'Oui') {
-          detailsSection.style.display = 'block';
-        } else {
-          detailsSection.style.display = 'none';
-        }
-      });
+  presenceSelect.addEventListener('change', () => {
+    if (presenceSelect.value === 'Oui') {
+      detailsSection.style.display = 'block';
+    } else {
+      detailsSection.style.display = 'none';
+    }
+  });
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        form.style.display = 'none';
-        success.style.display = 'block';
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        fetch(scriptURL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: new FormData(form)
-        });
-      });
+    const presenceValue = presenceSelect.value;
 
-      for (let i = 0; i < 20; i++) {
-        const petal = document.createElement('div');
-        petal.className = 'petal';
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = (6 + Math.random() * 6) + 's';
-        document.body.appendChild(petal);
-      }
+    form.style.display = 'none';
+    success.style.display = 'block';
 
+    if (presenceValue === 'Oui') {
+      success.innerHTML = `
+        Merci pour ta réponse 🤍<br>
+        Nous avons hâte de partager ce moment avec toi ✨
+      `;
+    } else {
+      success.innerHTML = `
+        Merci pour ta réponse 🤍<br>
+        Dommage que tu ne puisses pas être présent avec nous ❤️
+      `;
+    }
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: new FormData(form)
     });
-  </script>
 
-</body>
-</html>
+  });
+
+});
+</script>
