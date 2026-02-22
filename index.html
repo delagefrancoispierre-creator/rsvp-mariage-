@@ -16,7 +16,6 @@
       overflow-x: hidden;
     }
 
-    /* Image du faire-part en fond */
     body::before {
       content: "";
       position: fixed;
@@ -131,7 +130,11 @@
         <option value="Non">Non</option>
       </select>
 
-      <div id="detailsSection">
+      <div id="detailsSection" style="display:none;">
+
+        <label>Indique ton nom et celui ou celle qui t'accompagne (si tu ne viens pas seul 😉)</label>
+        <textarea name="accompagnant_nom" rows="2" placeholder="Ex : Je viens avec Marie Dupont"></textarea>
+
         <label>Nombre de plats végétariens 🌿</label>
         <input type="number" name="nb_vegetariens" min="0" value="0" required />
 
@@ -153,6 +156,7 @@
 
         <label>Quelle musique te ferait plaisir ?</label>
         <textarea name="musique_oui" rows="3"></textarea>
+
       </div>
 
       <button type="submit">Envoyer ma réponse</button>
@@ -166,6 +170,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+
       const form = document.getElementById('rsvpForm');
       const success = document.getElementById('successMessage');
       const presenceSelect = document.getElementById('presenceSelect');
@@ -174,7 +179,11 @@
       const scriptURL = 'https://script.google.com/macros/s/AKfycbwiVQgYC3aba0PvwKQVIy5ijDXn7dRhJAi-gYSEdmSZQ3VhZ-Bvj7lGv4hmHVDMBBk0FQ/exec';
 
       presenceSelect.addEventListener('change', () => {
-        detailsSection.style.display = presenceSelect.value === 'Non' ? 'none' : 'block';
+        if (presenceSelect.value === 'Oui') {
+          detailsSection.style.display = 'block';
+        } else {
+          detailsSection.style.display = 'none';
+        }
       });
 
       form.addEventListener('submit', (e) => {
@@ -196,6 +205,7 @@
         petal.style.animationDuration = (6 + Math.random() * 6) + 's';
         document.body.appendChild(petal);
       }
+
     });
   </script>
 
