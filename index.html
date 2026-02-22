@@ -44,13 +44,11 @@
       text-align: center;
       font-size: 2.8rem;
       margin-bottom: 5px;
-      font-weight: normal;
     }
 
     .date {
       text-align: center;
       font-family: 'Playfair Display', serif;
-      font-size: 1rem;
       margin-bottom: 35px;
       letter-spacing: 2px;
     }
@@ -96,6 +94,24 @@
       font-weight: 600;
     }
 
+    .addresses {
+      margin-top: 50px;
+      font-size: 0.95rem;
+      border-top: 1px solid #e6c65c;
+      padding-top: 25px;
+    }
+
+    .addresses h2 {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 15px;
+    }
+
+    .addresses a {
+      color: #4b3a2f;
+      text-decoration: underline;
+    }
+
     .petal {
       position: fixed;
       width: 14px;
@@ -133,7 +149,7 @@
       <div id="detailsSection" style="display:none;">
 
         <label>Indique ton nom et celui ou celle qui t'accompagne (si tu ne viens pas seul 😉)</label>
-        <textarea name="accompagnant_nom" rows="2" placeholder="Ex : Je viens avec Marie Dupont"></textarea>
+        <textarea name="accompagnant_nom" rows="2"></textarea>
 
         <label>Nombre de plats végétariens 🌿</label>
         <input type="number" name="nb_vegetariens" min="0" value="0" required />
@@ -142,7 +158,7 @@
         <input type="number" name="nb_flexitariens" min="0" value="0" required />
 
         <label>Si vous avez quelconque allergie ou régime spécifique, merci de préciser</label>
-        <textarea name="allergies" rows="3" placeholder="Ex : allergie aux noix, sans gluten, etc."></textarea>
+        <textarea name="allergies" rows="3"></textarea>
 
         <label>Serez-vous présent au rebond ?</label>
         <select name="rebond">
@@ -166,6 +182,25 @@
       Merci pour ta réponse 🤍<br>
       Nous avons hâte de célébrer ce moment avec toi ✨
     </div>
+
+    <div class="addresses">
+      <h2>Adresses utiles</h2>
+
+      <p>
+        <strong>Cérémonie religieuse :</strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank">
+          Temple de Lille – Place du Temple, Lille
+        </a>
+      </p>
+
+      <p>
+        <strong>Lieu de fête :</strong><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+Chemin+du+Vieux+Comte+1+7542+Tournai+Belgique" target="_blank">
+          La Cense des Sources – Chemin du Vieux Comté 1, 7542 Tournai, Belgique
+        </a>
+      </p>
+    </div>
+
   </div>
 
   <script>
