@@ -23,7 +23,7 @@
       inset: 0;
       background: url('chateau.png') center 65% no-repeat;
       background-size: 900px;
-      opacity: 0.08; /* effet fondu */
+      opacity: 0.08;
       z-index: 0;
       pointer-events: none;
     }
@@ -34,17 +34,10 @@
       max-width: 580px;
       margin: 70px auto;
       background: rgba(255, 249, 236, 0.95);
-      backdrop-filter: blur(2px);
       padding: 45px;
       border-radius: 28px;
       box-shadow: 0 25px 60px rgba(0,0,0,0.08);
       border: 2px solid #e6c65c;
-      animation: fadeUp 1s ease forwards;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
@@ -91,12 +84,10 @@
       font-weight: 600;
       font-size: 1.1rem;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     button:hover {
       background: #d4b24d;
-      transform: translateY(-2px);
     }
 
     .success {
@@ -112,7 +103,7 @@
       height: 14px;
       background: #b9931e;
       border-radius: 50%;
-      opacity: 0.65;
+      opacity: 0.7;
       animation: float 10s linear infinite;
       z-index: 1;
     }
@@ -141,22 +132,14 @@
       </select>
 
       <div id="detailsSection">
-        <label>Viendras-tu seul·e ou accompagné·e ?</label>
-        <select name="accompagnement">
-          <option value="">— Choisir —</option>
-          <option value="1">Seul·e</option>
-          <option value="2">Accompagné·e</option>
-        </select>
+        <label>Nombre de plats végétariens 🌿</label>
+        <input type="number" name="nb_vegetariens" min="0" value="0" required />
 
-        <label>Nombre total de personnes (toi inclus)</label>
-        <input type="number" name="nb_personnes" min="1" value="1" />
+        <label>Nombre de plats flexitariens 🍽️</label>
+        <input type="number" name="nb_flexitariens" min="0" value="0" required />
 
-        <label>Préférence de plat</label>
-        <select name="plat">
-          <option value="">— Choisir —</option>
-          <option>Végétarien</option>
-          <option>Flexitarien</option>
-        </select>
+        <label>Si vous avez quelconque allergie ou régime spécifique, merci de préciser</label>
+        <textarea name="allergies" rows="3" placeholder="Ex : allergie aux noix, sans gluten, etc."></textarea>
 
         <label>Serez-vous présent au rebond ?</label>
         <select name="rebond">
@@ -170,13 +153,6 @@
 
         <label>Quelle musique te ferait plaisir ?</label>
         <textarea name="musique_oui" rows="3"></textarea>
-
-        <label>Aurez-vous besoin d'un logement pas loin ?</label>
-        <select name="logement">
-          <option value="">— Choisir —</option>
-          <option>Oui</option>
-          <option>Non</option>
-        </select>
       </div>
 
       <button type="submit">Envoyer ma réponse</button>
