@@ -1,253 +1,203 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>RSVP Mariage</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>RSVP Mariage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&family=Great+Vibes&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: #f4ecd8;
-      color: #4b3a2f;
-      overflow-x: hidden;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #f4ecd8;
+  color: #4b3a2f;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: url('chateau.png') center 65% no-repeat;
-      background-size: 900px;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-    }
+.container {
+  max-width: 600px;
+  margin: 60px auto;
+  background: #fff9ec;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  border: 2px solid #e6c65c;
+}
 
-    .container {
-      position: relative;
-      z-index: 2;
-      max-width: 580px;
-      margin: 70px auto;
-      background: rgba(255, 249, 236, 0.95);
-      padding: 45px;
-      border-radius: 28px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.08);
-      border: 2px solid #e6c65c;
-    }
+h1 {
+  font-family: 'Great Vibes', cursive;
+  text-align: center;
+  font-size: 2.8rem;
+}
 
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      text-align: center;
-      font-size: 2.8rem;
-      margin-bottom: 5px;
-    }
+.date {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-    .date {
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 35px;
-      letter-spacing: 2px;
-    }
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
 
-    label {
-      display: block;
-      margin-top: 22px;
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 15px;
+  border: 1px solid #d8c9a6;
+  background: #fffdf7;
+  font-size: 1rem;
+}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid #d8c9a6;
-      background: #fffdf7;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
+button {
+  width: 100%;
+  margin-top: 30px;
+  padding: 14px;
+  border-radius: 20px;
+  border: none;
+  background: #e6c65c;
+  font-weight: 600;
+  cursor: pointer;
+}
 
-    button {
-      width: 100%;
-      margin-top: 40px;
-      padding: 15px;
-      border-radius: 20px;
-      border: none;
-      background: #e6c65c;
-      color: #4b3a2f;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-    }
+.success {
+  display: none;
+  text-align: center;
+  margin-top: 30px;
+  font-weight: 600;
+}
 
-    button:hover {
-      background: #d4b24d;
-    }
+#detailsSection {
+  display: none;
+}
 
-    .success {
-      display: none;
-      text-align: center;
-      margin-top: 30px;
-      font-weight: 600;
-    }
-
-    .addresses {
-      margin-top: 50px;
-      font-size: 0.95rem;
-      border-top: 1px solid #e6c65c;
-      padding-top: 25px;
-    }
-
-    .addresses h2 {
-      text-align: center;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 15px;
-    }
-
-    .addresses a {
-      color: #4b3a2f;
-      text-decoration: underline;
-    }
-
-    .petal {
-      position: fixed;
-      width: 14px;
-      height: 14px;
-      background: #b9931e;
-      border-radius: 50%;
-      opacity: 0.7;
-      animation: float 10s linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes float {
-      from { transform: translateY(-10vh); }
-      to { transform: translateY(110vh); }
-    }
-  </style>
+#addresses {
+  margin-top: 50px;
+  font-size: 0.95rem;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Camille & François-Pierre</h1>
-    <div class="date">19.09.2026</div>
+<div class="container">
+<h1>Camille & François-Pierre</h1>
+<div class="date">19.09.2026</div>
 
-    <form id="rsvpForm">
-      <label>Nom et prénom</label>
-      <input type="text" name="nom" required />
+<form id="rsvpForm">
 
-      <label>Présent·e au mariage</label>
-      <select name="presence" id="presenceSelect" required>
-        <option value="">— Choisir —</option>
-        <option value="Oui">Oui</option>
-        <option value="Non">Non</option>
-      </select>
+<label>Nom et prénom</label>
+<input type="text" name="nom" required>
 
-      <div id="detailsSection" style="display:none;">
+<label>Présent·e au mariage</label>
+<select name="presence" id="presenceSelect" required>
+<option value="">— Choisir —</option>
+<option>Oui</option>
+<option>Non</option>
+</select>
 
-        <label>Indique le nom de celui ou celle qui t'accompagne (si tu ne viens pas seul 😉)</label>
-        <textarea name="accompagnant_nom" rows="2"></textarea>
+<div id="detailsSection">
 
-        <label>Nombre de plats végétariens 🌿</label>
-        <input type="number" name="nb_vegetariens" min="0" value="0" required />
+<label>Indique ton nom et celui ou celle qui t'accompagne (si tu ne viens pas seul 😉)</label>
+<input type="text" name="nom_accompagnant">
 
-        <label>Nombre de plats flexitariens 🍽️</label>
-        <input type="number" name="nb_flexitariens" min="0" value="0" required />
+<label>Combien de plats végétariens et flexitariens ?</label>
+<textarea name="plats" placeholder="Ex: 1 végétarien, 1 flexitarien" required></textarea>
 
-        <label>Si vous avez quelconque allergie ou régime spécifique, merci de préciser</label>
-        <textarea name="allergies" rows="3"></textarea>
+<label>Si vous avez quelconques allergies merci de préciser</label>
+<textarea name="allergies"></textarea>
 
-        <label>Serez-vous présent au rebond ?</label>
-        <select name="rebond">
-          <option value="">— Choisir —</option>
-          <option>Oui</option>
-          <option>Non</option>
-        </select>
+<label>Serez-vous présent au rebond ?</label>
+<select name="rebond" required>
+<option value="">— Choisir —</option>
+<option>Oui</option>
+<option>Non</option>
+</select>
 
-        <label>Quelle musique ne veux-tu pas entendre ?</label>
-        <textarea name="musique_non" rows="3"></textarea>
+<label>Quelle musique ne veux-tu pas entendre ?</label>
+<textarea name="musique_non"></textarea>
 
-        <label>Quelle musique te ferait plaisir ?</label>
-        <textarea name="musique_oui" rows="3"></textarea>
+<label>Quelle musique te ferait plaisir ?</label>
+<textarea name="musique_oui"></textarea>
 
-      </div>
+</div>
 
-      <button type="submit">Envoyer ma réponse</button>
-    </form>
+<button type="submit">Envoyer ma réponse</button>
 
-    <div class="success" id="successMessage">
-      Merci pour ta réponse 🤍<br>
-      Nous avons hâte de célébrer ce moment avec toi ✨
-    </div>
+</form>
 
-    <div class="addresses">
-      <h2>Adresses utiles</h2>
+<div class="success" id="successMessage"></div>
 
-      <p>
-        <strong>Cérémonie religieuse :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank">
-          Temple de Lille – Place du Temple, Lille
-        </a>
-      </p>
+<div id="addresses">
+<hr>
+<h2>Adresses utiles</h2>
+<p>
+<strong>Cérémonie religieuse :</strong><br>
+<a href="https://www.google.com/maps/search/?api=1&query=Temple+de+Lille+Place+du+Temple+Lille" target="_blank">
+Temple de Lille — Place du Temple, Lille
+</a>
+</p>
 
-      <p>
-        <strong>Lieu de fête :</strong><br>
-        <a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+Chemin+du+Vieux+Comte+1+7542+Tournai+Belgique" target="_blank">
-          La Cense des Sources – Chemin du Vieux Comté 1, 7542 Tournai, Belgique
-        </a>
-      </p>
-    </div>
+<p>
+<strong>Lieu de fête :</strong><br>
+<a href="https://www.google.com/maps/search/?api=1&query=La+Cense+des+Sources+chemin+du+vieux+compté+1+7542+Tournai+Belgique" target="_blank">
+La Cense des Sources — Chemin du vieux compté 1, 7542 Tournai, Belgique
+</a>
+</p>
+</div>
 
-  </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  const form = document.getElementById('rsvpForm');
-  const success = document.getElementById('successMessage');
-  const presenceSelect = document.getElementById('presenceSelect');
-  const detailsSection = document.getElementById('detailsSection');
+const form = document.getElementById('rsvpForm');
+const success = document.getElementById('successMessage');
+const presenceSelect = document.getElementById('presenceSelect');
+const detailsSection = document.getElementById('detailsSection');
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbwiVQgYC3aba0PvwKQVIy5ijDXn7dRhJAi-gYSEdmSZQ3VhZ-Bvj7lGv4hmHVDMBBk0FQ/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwiVQgYC3aba0PvwKQVIy5ijDXn7dRhJAi-gYSEdmSZQ3VhZ-Bvj7lGv4hmHVDMBBk0FQ/exec';
 
-  presenceSelect.addEventListener('change', () => {
-    if (presenceSelect.value === 'Oui') {
-      detailsSection.style.display = 'block';
-    } else {
-      detailsSection.style.display = 'none';
-    }
-  });
+presenceSelect.addEventListener('change', () => {
+  if (presenceSelect.value === 'Oui') {
+    detailsSection.style.display = 'block';
+  } else {
+    detailsSection.style.display = 'none';
+  }
+});
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-    const presenceValue = presenceSelect.value;
+  const presenceValue = presenceSelect.value;
 
-    form.style.display = 'none';
-    success.style.display = 'block';
+  form.style.display = 'none';
+  success.style.display = 'block';
 
-    if (presenceValue === 'Oui') {
-      success.innerHTML = `
-        Merci pour ta réponse 🤍<br>
-        Nous avons hâte de partager ce moment avec toi ✨
-      `;
-    } else {
-      success.innerHTML = `
-        Merci pour ta réponse 🤍<br>
-        Dommage que tu ne puisses pas être présent avec nous ❤️
-      `;
-    }
+  if (presenceValue === 'Oui') {
+    success.innerHTML = `
+      Merci pour ta réponse 🤍<br>
+      Nous avons hâte de partager ce moment avec toi ✨
+    `;
+  } else {
+    success.innerHTML = `
+      Merci pour ta réponse 🤍<br>
+      Dommage que tu ne puisses pas être présent avec nous ❤️
+    `;
+  }
 
-    fetch(scriptURL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: new FormData(form)
-    });
-
+  fetch(scriptURL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: new FormData(form)
   });
 
 });
+
+});
 </script>
+
+</body>
+</html>
