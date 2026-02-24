@@ -13,15 +13,30 @@ body {
   font-family: 'Montserrat', sans-serif;
   background: #f4ecd8;
   color: #4b3a2f;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Image fond chateau */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('chateau.png') center center no-repeat;
+  background-size: 800px;
+  opacity: 0.07;
+  z-index: 0;
 }
 
 .container {
+  position: relative;
+  z-index: 2;
   max-width: 600px;
-  margin: 60px auto;
+  margin: 70px auto;
   background: #fff9ec;
-  padding: 40px;
-  border-radius: 25px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  padding: 45px;
+  border-radius: 28px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
   border: 2px solid #e6c65c;
 }
 
@@ -29,17 +44,18 @@ h1 {
   font-family: 'Great Vibes', cursive;
   text-align: center;
   font-size: 2.8rem;
+  margin-bottom: 5px;
 }
 
 .date {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 
 label {
   display: block;
   margin-top: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 input, select, textarea {
@@ -53,13 +69,18 @@ input, select, textarea {
 
 button {
   width: 100%;
-  margin-top: 30px;
+  margin-top: 35px;
   padding: 14px;
   border-radius: 20px;
   border: none;
   background: #e6c65c;
   font-weight: 600;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #d4b24d;
 }
 
 .success {
@@ -76,6 +97,29 @@ button {
 #addresses {
   margin-top: 50px;
   font-size: 0.95rem;
+}
+
+#addresses a {
+  color: #4b3a2f;
+  text-decoration: underline;
+}
+
+/* Pétales */
+.petal {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #c9a227;
+  border-radius: 50%;
+  opacity: 0.6;
+  pointer-events: none;
+  animation: float 12s linear infinite;
+  z-index: 1;
+}
+
+@keyframes float {
+  from { transform: translateY(-10vh); }
+  to { transform: translateY(110vh); }
 }
 </style>
 </head>
@@ -104,13 +148,13 @@ button {
 <input type="text" name="nom_accompagnant">
 
 <label>Combien de plats végétariens et flexitariens ?</label>
-<textarea name="plats" placeholder="Ex: 1 végétarien, 1 flexitarien" required></textarea>
+<textarea name="plats" placeholder="Ex: 1 végétarien, 1 flexitarien"></textarea>
 
 <label>Si vous avez quelconques allergies merci de préciser</label>
 <textarea name="allergies"></textarea>
 
 <label>Serez-vous présent au rebond ?</label>
-<select name="rebond" required>
+<select name="rebond">
 <option value="">— Choisir —</option>
 <option>Oui</option>
 <option>Non</option>
@@ -125,7 +169,6 @@ button {
 </div>
 
 <button type="submit">Envoyer ma réponse</button>
-
 </form>
 
 <div class="success" id="successMessage"></div>
@@ -195,6 +238,16 @@ form.addEventListener('submit', (e) => {
   });
 
 });
+
+// Génération pétales
+for (let i = 0; i < 15; i++) {
+  const petal = document.createElement('div');
+  petal.className = 'petal';
+  petal.style.left = Math.random() * 100 + 'vw';
+  petal.style.animationDuration = (8 + Math.random() * 6) + 's';
+  petal.style.opacity = 0.4 + Math.random() * 0.4;
+  document.body.appendChild(petal);
+}
 
 });
 </script>
